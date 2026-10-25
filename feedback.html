@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HoverGloss · 问题记录</title><link rel="stylesheet" href="evaluation.css"></head>
+<body><main>
+  <a href="demo.html">← 返回效果测试</a>
+  <h1>问题记录</h1>
+  <p>在单词卡片点击“释义不对”，记录当时的原句、译文和问题。记录只保存在本机，可导出用于分析。</p>
+  <section>
+    <div class="actions"><button id="refresh" type="button">刷新记录</button>
+      <button id="exportFeedback" type="button" disabled>导出问题记录</button>
+      <label>查看 <select id="filter"><option value="">全部类型</option>
+        <option value="word">单词义</option><option value="phrase">短语</option>
+        <option value="context">原句提取</option><option value="sentence">整句翻译</option><option value="other">其他</option>
+      </select></label>
+    </div>
+    <p id="status" role="status">正在读取…</p>
+    <p class="hint">记录问题不会自动改写词库、学习库或翻译规则。导出文件包含原句和来源，请自行决定是否分享。</p>
+    <div id="entries"></div>
+  </section>
+</main><script src="feedback.js"></script></body>
+</html>

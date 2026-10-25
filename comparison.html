@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HoverGloss · 报告对比</title><link rel="stylesheet" href="evaluation.css"></head>
+<body><main>
+  <a href="evaluation.html">← 返回质量检查</a>
+  <h1>比较两份评测报告</h1>
+  <p>改善和退步按两份报告中已有的人工判断分别比较。未复核的译文变化保留为待确认。</p>
+  <section>
+    <label>较早报告 <input id="before" type="file" accept=".json,application/json"></label>
+    <p id="beforeName" class="hint"></p>
+    <label>较新报告 <input id="after" type="file" accept=".json,application/json"></label>
+    <p id="afterName" class="hint"></p>
+    <p id="status" role="status">请选择两份从质量检查页导出的 JSON 报告。</p>
+    <div class="actions">
+      <label>查看 <select id="filter">
+        <option value="">全部共同例句</option><option value="improved">人工复核改善</option>
+        <option value="regressed">人工复核退步</option><option value="mixed">有改善也有退步</option>
+        <option value="pending">待确认</option><option value="unchanged">已复核维度未变</option><option value="error">运行失败</option>
+      </select></label>
+      <button id="exportComparison" type="button" disabled>导出对比</button>
+    </div>
+    <p class="hint">导入只在此页面内存中处理，不覆盖当前评测，不上传文件。</p>
+  </section>
+  <section><p id="summary"></p><p id="warnings" class="hint"></p><div id="results"></div></section>
+</main><script src="report-comparison.js"></script><script src="comparison.js"></script></body>
+</html>

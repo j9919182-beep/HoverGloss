@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HoverGloss · 双语字幕</title>
+  <link rel="stylesheet" href="live-captions.css">
+</head>
+<body>
+  <header><div class="eyebrow">HOVERGLOSS</div><h1>双语字幕</h1><button id="minimizePanel" type="button" title="收起控制面板，画面 CC 字幕继续">− 收起</button><p id="videoTitle">连接当前视频…</p></header>
+  <section class="controls" aria-label="字幕控制">
+    <label class="mode-label">字幕来源 <select id="captionMode"><option value="cc">英文 CC</option><option id="audioModeOption" value="audio">无 CC · 本机听音（实验）</option></select></label>
+    <label id="englishControl" class="confirmation"><input id="englishConfirmed" type="checkbox">我已开启播放器 CC，并选择英语</label>
+    <section id="playerControls" aria-label="播放器字幕设置">
+      <label class="mode-label">画面字幕 <select id="playerDisplay"><option value="below" selected>原生英文＋中文</option><option value="bilingual">统一双语 · 调整英文及中文比例</option><option value="native">原生 CC · 只在侧栏翻译</option></select></label>
+      <details class="display-details"><summary>字号与显示</summary><div class="player-options">
+        <label>英文基准字号 <select id="playerFontSize"><option value="18">小</option><option value="22" selected>中</option><option value="28">大</option></select></label>
+        <label>中文 / 英文 <select id="playerRatio"><option value="0.8">80%</option><option value="0.9" selected>90% · 推荐</option><option value="1">100%</option></select></label>
+        <label>字幕底距 <select id="playerOffset"><option value="48">较低</option><option value="72" selected>默认</option><option value="120">较高</option></select></label>
+        <label>字幕背景 <select id="playerOpacity"><option value="0.35">浅</option><option value="0.65" selected>中</option><option value="0.85">深</option></select></label>
+        <label>中文停留 <select id="playerHold"><option value="2">较快 · 2 秒</option><option value="4" selected>标准 · 4 秒</option><option value="6">慢读 · 6 秒</option></select></label>
+      </div>
+      <label class="confirmation"><input id="keepFullscreen" type="checkbox" checked>全屏时继续翻译</label></details>
+    </section>
+    <section id="audioOptions" hidden aria-label="本机语音识别设置">
+      <label class="mode-label">识别方式 <select id="asrBackend"><option value="cpu">CPU 省资源 · 约 45 MB 模型</option><option value="gpu">GPU 加速 · 约 155 MB 模型</option></select></label>
+      <div class="buttons"><button id="prepareASR" type="button">下载并准备语音模型</button><button id="releaseASR" type="button" disabled>取消 / 释放模型</button></div>
+      <div class="buttons"><button id="grantAudio" type="button">授权标签页音频</button></div>
+      <label class="confirmation"><input id="audioConsent" type="checkbox">仅识别当前选定 YouTube 标签页的声音，不使用麦克风、不上传音频</label>
+      <p class="audio-warning">先准备语音模型、授权并勾选，再点下方“开始”。仅适合英文；音乐、口音和多人讲话可能误识别。声音来自整个标签页，广告也可能被识别。</p>
+      <p id="audioMetrics">未启动 · 原始音频不保存</p>
+    </section>
+    <div class="buttons"><button id="prepare" type="button">准备本机英中翻译</button><button id="reconnect" type="button">重新连接</button></div>
+    <div class="buttons"><button id="start" class="primary" type="button" disabled>开始</button><button id="pause" type="button" disabled>暂停</button><button id="stop" type="button" disabled>停止</button><button id="clear" type="button">清空</button><label class="size">字号 <select id="fontSize" aria-label="字幕字号"><option value="15">小</option><option value="18" selected>中</option><option value="21">大</option></select></label></div>
+    <p id="status" role="status" aria-live="polite">等待连接…</p>
+    <details class="help-details"><summary>使用说明</summary><p class="audio-warning">扩展弹窗中的“自动双语字幕”开关可直接启动或停止英文 CC 翻译。首次若提示确认，请在视频画面点击“开始双语字幕”。</p><p class="audio-warning">YouTube 会尝试开启 CC；请确保选择英语。B站需要可读取的英文 CC，压进画面的字幕无法直接读取。</p><p class="audio-warning">收起面板、切换标签页后画面字幕继续；后台可能延迟。暂停、停止、换视频或刷新会结束当前处理。听音模式需要独立授权，侧栏隐藏时停止；画中画暂不支持。</p></details>
+  </section>
+  <div class="reading-bar"><span id="count">0 条字幕</span><button id="latest" type="button" hidden>↓ 回到最新</button></div>
+  <main id="transcript" tabindex="0" aria-label="双语字幕，可滚动回看"><div id="empty">字幕将在这里显示<span>打开自动字幕开关，或点击视频画面的开始。</span></div></main>
+  <footer>本机翻译 · 最近 80 条临时记录</footer>
+  <script src="browser-translator.js"></script>
+  <script src="live-captions-core.js"></script>
+  <script src="audio-captions-core.js"></script>
+  <script src="tab-audio-capture.js"></script>
+  <script src="local-asr-client.js"></script>
+  <script src="live-captions.js"></script>
+</body>
+</html>

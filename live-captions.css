@@ -1,0 +1,48 @@
+:root { color-scheme: light; --caption-size: 18px; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; color: #213456; background: #f5f7fc; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; height: 100vh; display: flex; flex-direction: column; min-width: 260px; }
+header { padding: 22px 20px 12px; background: #fff; }
+.eyebrow { font-size: 10px; letter-spacing: 1.8px; color: #4265ba; font-weight: 700; }
+h1 { margin: 8px 0; font-size: 24px; letter-spacing: -1px; }
+header p { margin: 0; color: #70809a; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#minimizePanel { float: right; margin-top: -38px; padding: 6px 8px; font-size: 11px; }
+.controls { padding: 10px 18px 12px; background: white; border-bottom: 1px solid #dde5f5; max-height: 55vh; flex-shrink: 0; overflow-y: auto; }
+.confirmation { display: flex; gap: 7px; align-items: flex-start; font-size: 12px; line-height: 1.6; margin-bottom: 10px; }
+.mode-label { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 10px; }
+.mode-label select { flex: 1; min-width: 0; }
+#audioOptions { padding: 10px; border: 1px solid #dbe4f6; border-radius: 10px; background: #f7f9ff; margin-bottom: 10px; }
+#playerControls { padding: 10px; border: 1px solid #dbe4f6; border-radius: 10px; background: #f7f9ff; margin-bottom: 10px; }
+.player-options { display: flex; flex-wrap: wrap; gap: 7px 12px; }
+.player-options label { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #617594; }
+.player-options select { padding: 5px; }
+.display-details summary, .help-details summary { cursor: pointer; color: #617594; font-size: 12px; padding: 5px 0; }
+.display-details[open] .player-options { margin-top: 8px; }
+.display-details .confirmation { margin: 12px 0 0; }
+.help-details { margin-top: 10px; }
+#audioOptions .confirmation { margin-top: 10px; margin-bottom: 5px; }
+.audio-warning, #audioMetrics { font-size: 10px; line-height: 1.6; color: #7685a0; margin: 5px 0; }
+#audioMetrics { color: #4266b8; font-variant-numeric: tabular-nums; }
+input { accent-color: #3764dd; }
+.buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 7px; }
+button, select { font: inherit; font-size: 12px; border: 1px solid #d4dff4; border-radius: 9px; background: white; color: #315694; padding: 7px 9px; cursor: pointer; }
+button:hover:not(:disabled) { background: #edf3ff; }
+button.primary { background: #3764dd; border-color: #3764dd; color: white; }
+button.primary:hover:not(:disabled) { background: #2b52bd; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button:focus-visible, select:focus-visible, input:focus-visible, main:focus-visible { outline: 2px solid #416ee4; outline-offset: 2px; }
+.size { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #71809a; margin-left: auto; }
+.size select { padding: 6px; }
+#status { margin: 10px 0 0; font-size: 12px; color: #617594; line-height: 1.6; overflow-wrap: anywhere; }
+.reading-bar { padding: 9px 18px; display: flex; align-items: center; justify-content: space-between; min-height: 41px; font-size: 11px; color: #71809a; }
+#latest { padding: 4px 8px; }
+main { flex: 1; overflow-y: auto; min-height: 70px; padding: 0 12px 18px; scroll-behavior: auto; }
+#empty { padding: 34px 10px; font-size: 18px; line-height: 1.8; color: #41609a; text-align: center; }
+#empty span { display: block; font-size: 12px; color: #8090aa; margin-top: 10px; }
+.caption { padding: 14px; margin-bottom: 10px; background: white; border: 1px solid #e0e7f6; border-radius: 13px; }
+.stamp { font-size: 10px; color: #8a99b1; font-variant-numeric: tabular-nums; }
+.english { margin: 6px 0 10px; font-size: var(--caption-size); line-height: 1.55; color: #233654; overflow-wrap: anywhere; }
+.chinese { margin: 0; padding-top: 9px; border-top: 1px solid #edf0f8; font-size: calc(var(--caption-size) - 2px); line-height: 1.7; color: #345db0; overflow-wrap: anywhere; }
+.chinese.pending { color: #8a99b1; font-size: 12px; }
+footer { padding: 10px 18px; border-top: 1px solid #e1e7f3; font-size: 10px; color: #7d8ba2; line-height: 1.6; }
+@media (max-height: 580px) { header { padding-top: 12px; } h1 { font-size: 20px; } footer { padding: 6px 18px; } }

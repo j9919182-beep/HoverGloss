@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HoverGloss · 极简悬译</title>
+  <link rel="stylesheet" href="ui.css">
+</head>
+<body class="popup-page">
+  <main class="popup-shell">
+    <header class="popup-header">
+      <div class="brand-identity">
+        <img class="brand-mark" src="icons/icon32.png" alt="" aria-hidden="true" width="34" height="34">
+        <div>
+          <h1>HoverGloss</h1>
+        </div>
+      </div>
+      <button id="openOptions" class="header-action" type="button">设置</button>
+    </header>
+
+    <div class="popup-content">
+      <section class="site-control">
+        <div>
+          <strong>当前网站</strong>
+          <p id="hostLabel">读取当前网站中…</p>
+        </div>
+        <label class="switch" aria-label="在当前网站启用">
+          <input id="siteEnabled" type="checkbox">
+          <span></span>
+        </label>
+      </section>
+
+      <section class="language-control">
+        <label for="sourceLanguage">阅读语言</label>
+        <select id="sourceLanguage"><option value="en">英语 → 中文</option><option value="fr">法语 → 中文</option></select>
+      </section>
+
+      <section>
+        <div class="section-heading"><span>悬停翻译</span></div>
+        <div class="mode-panel">
+          <select id="triggerMode" aria-label="单词与短语的翻译方式">
+            <option value="alt-hover">Alt＋悬停（推荐）</option>
+            <option value="ctrl-hover">Ctrl＋悬停</option>
+            <option value="double-click">双击单词或短语</option>
+            <option value="selection">选中文字后翻译</option>
+            <option value="always-hover">直接悬停</option>
+          </select>
+          <label class="selection-toggle"><input id="selectionAutoTranslate" type="checkbox"><span><strong>选中文字自动翻译</strong></span></label>
+          <details class="compact-help"><summary>快捷键与说明</summary><p class="hint" id="modeHint"></p><p class="sentence-hint"><strong>Alt＋Shift</strong> 悬停翻译整句</p></details>
+        </div>
+      </section>
+
+      <section class="site-control">
+        <div><strong>学习模式</strong><p>收藏词句，随时复习</p></div>
+        <label class="switch" aria-label="开启学习模式"><input id="learningMode" type="checkbox"><span></span></label>
+      </section>
+      <section id="youtubeSearchPanel" hidden>
+        <div class="site-control feature-row"><div><strong id="searchPlatformLabel">英文搜索</strong><p>中文输入，英文搜索</p></div><label class="switch" aria-label="开启英文搜索"><input id="youtubeSearchEnabled" type="checkbox"><span></span></label></div>
+        <details class="compact-help"><summary>搜索选项</summary><label class="selection-toggle"><input id="youtubeSearchAutoReplace" type="checkbox"><span><strong>自动替换为英文</strong></span></label><p class="hint">仅限搜索框；由你提交搜索。首次点击搜索框旁“转英文”准备语言包。</p></details>
+      </section>
+      <section id="liveCaptionsPanel" hidden>
+        <div class="site-control feature-row"><div><strong>自动双语字幕</strong><p id="captionStatus" role="status">连接当前视频…</p></div><label class="switch" aria-label="开启当前视频自动双语字幕"><input id="captionsEnabled" type="checkbox" disabled><span></span></label></div>
+        <button id="openLiveCaptions" class="text-button" type="button" disabled>字幕设置与记录 ›</button>
+      </section>
+      <span id="readingLanguageLabel" hidden>English</span>
+      <div id="notice" class="notice" role="status"></div>
+    </div>
+
+    <nav class="popup-nav" aria-label="扩展导航">
+      <span class="active">翻译</span>
+      <button id="openLearning" type="button">学习库</button>
+      <button id="openPdf" type="button">PDF</button>
+      <button id="openDemo" type="button">测试</button>
+    </nav>
+  </main>
+  <script src="pdf-source.js"></script>
+  <script src="search-sites.js"></script>
+  <script src="live-captions-core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "name": "hovergloss",
+  "version": "0.9.31",
+  "private": true,
+  "license": "MIT",
+  "description": "Context-aware, minimal hover translation browser extension",
+  "scripts": {
+    "pretest": "node tests/sentence-boundary.test.cjs && node tests/pdf-cross-page.test.cjs",
+    "test:sentences": "node tests/sentence-boundary.test.cjs && node tests/context-boundary.test.cjs && node tests/pdf-context.test.cjs",
+    "build:ocr": "node scripts/build-local-ocr.cjs",
+    "test:pdf-ocr": "node tests/pdf-ocr.test.cjs && node tests/pdf-reader-session.test.cjs && node tests/pdf-clean-copy.test.cjs",
+    "test:pdf-copy": "node tests/pdf-clean-copy.test.cjs && node tests/pdf-reader-session.test.cjs && node tests/pdf-context.test.cjs",
+    "build:asr": "node scripts/build-local-asr.cjs",
+    "test:asr": "node tests/audio-captions-core.test.cjs && node tests/tab-audio-capture.test.cjs && node tests/local-asr-client.test.cjs && node tests/local-asr-runtime.test.cjs && node tests/audio-captions-ui.test.cjs",
+    "test:captions": "node tests/live-captions-core.test.cjs && node tests/player-captions-core.test.cjs && node tests/player-captions-pacing.test.cjs && node tests/youtube-captions.test.cjs && node tests/youtube-fullscreen.test.cjs && node tests/live-captions-ui.test.cjs && node tests/live-captions-ui.test.cjs player && node tests/live-captions-ui.test.cjs fullscreen && node tests/live-captions-ui.test.cjs durable && node tests/live-captions-entry.test.cjs && node tests/cc-toggle.test.cjs && node tests/cc-quick-start.test.cjs && node tests/cc-preferences.test.cjs && node tests/cc-tab-switch.test.cjs && node tests/caption-panel.test.cjs && node tests/live-captions-ui.test.cjs scoped && node tests/live-captions-ui.test.cjs audio",
+    "test:ui": "node tests/popup-layout-browser.test.cjs && node tests/learning-import-browser.test.cjs && node tests/pdf-cross-page-browser.test.cjs",
+    "test:player-browser": "node tests/player-captions-browser.test.cjs && node tests/bilibili-captions-browser.test.cjs",
+    "test:cc-tabs": "node tests/cc-tab-switch.test.cjs && node tests/youtube-fullscreen.test.cjs && node tests/live-captions-ui.test.cjs durable",
+    "test:bilibili": "node tests/caption-sites.test.cjs && node tests/live-captions-ui.test.cjs bilibili && node tests/live-captions-entry.test.cjs",
+    "test:feedback": "node tests/feedback-store.test.cjs && node tests/feedback-card.test.cjs && node tests/report-comparison.test.cjs && node tests/feedback-report-ui.test.cjs",
+    "test:quality": "node tests/evaluation.test.cjs && node tests/evaluation-ui.test.cjs",
+    "test:search": "node tests/search-translator.test.cjs && node tests/search-sites.test.cjs && node tests/youtube-search.test.cjs && node tests/youtube-search-ui.test.cjs && node tests/youtube-search-ui.test.cjs google && node tests/youtube-search-ui.test.cjs github && node tests/youtube-search-ui.test.cjs github-legacy && node tests/youtube-search-ui.test.cjs github-semantic && node tests/youtube-search-ui.test.cjs github-fallback",
+    "test:github-browser": "node tests/github-search-browser.test.cjs",
+    "test:learning": "node tests/pronunciation.test.cjs && node tests/pronunciation-preferences.test.cjs && node tests/sentence-pronunciation.test.cjs && node tests/learning-store.test.cjs && node tests/learning-import.test.cjs && node tests/learning-card.test.cjs && node tests/learning-ui.test.cjs",
+    "test:french": "node tests/browser-translator.test.cjs && node tests/worker.test.cjs && node tests/learning-store.test.cjs && node tests/pronunciation.test.cjs && node tests/learning-ui.test.cjs",
+    "test:french-browser": "node tests/french-browser.test.cjs",
+    "test:grammar": "node tests/french-grammar-local.test.cjs && node tests/french-grammar.test.cjs && node tests/grammar-browser.test.cjs",
+    "test": "node tests/rules.test.cjs && node tests/glossary.test.cjs && node tests/browser-translator.test.cjs && node tests/context-aligner.test.cjs && node tests/local-alignment-core.test.cjs && node tests/offscreen-translator.test.cjs && node tests/worker.test.cjs && node tests/word-senses.test.cjs && node tests/word-card.test.cjs && node tests/hover-lifecycle.test.cjs && node tests/context-boundary.test.cjs && node tests/pdf-context.test.cjs && node tests/pdf-clean-copy.test.cjs && node tests/pdf-ocr.test.cjs && node tests/pdf-session.test.cjs && node tests/pdf-reader-session.test.cjs && node tests/pdf-source.test.cjs && node tests/pdf-navigation.test.cjs && node tests/toc-detect.test.cjs",
+    "build:aligner": "node scripts/build-local-aligner.cjs",
+    "check": "node scripts/check-release.cjs && npm run test && npm run test:learning && npm run test:search && npm run test:quality && npm run test:feedback && npm run test:captions && npm run test:asr"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@huggingface/transformers": "3.8.1",
+    "esbuild": "0.25.0",
+    "onnxruntime-web": "1.22.0-dev.20250409-89f8206ba4"
+  }
+}

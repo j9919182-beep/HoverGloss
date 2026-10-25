@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HoverGloss · 效果测试</title>
+  <link rel="stylesheet" href="content.css">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">HoverGloss · 极简悬译测试页</p>
+    <h1>测试单词、句意与整句翻译</h1>
+    <p><a href="evaluation.html">打开翻译质量检查：100 个例句，记录真实本机译文与人工复核</a></p>
+    <p><a href="feedback.html">查看与导出问题记录</a> · <a href="comparison.html">比较两份评测报告</a></p>
+    <p class="lead">单词：按住 Alt 悬停。配置 AI 后，HoverGloss 会先理解所在句子，再判断单词的当前含义。整句或自然段：拖拽选中后自动翻译，也可以按住 Alt＋Shift 悬停整句。</p>
+
+    <section>
+      <h2>句子优先语境测试</h2>
+      <p>The investment generated a high <strong>return</strong> last year.</p>
+      <p>The function will <a href="#context-test">return</a> the first matching value.</p>
+      <p id="context-test">Run the SQL query and inspect the first row.</p>
+      <p>The river runs through the center of the city.</p>
+    </section>
+
+    <section>
+      <h2>低匹配时的句意复核</h2>
+      <p>可先在设置中启用本机对齐模型，再悬停下面的 <em>capital</em> 或 <em>key</em>。译文随浏览器模型而异；如果对应片段不可靠，卡片应保留原候选并标明“待确认”。</p>
+      <p>The firm needs to raise capital for expansion.</p>
+      <p>The key metric improved this quarter.</p>
+    </section>
+
+    <section>
+      <h2>短语内单词释义</h2>
+      <p>悬停下面的 <em>Commission</em>：应显示“委员会”，并附上“European Commission → 欧盟委员会”。</p>
+      <p>The European Commission president addressed the parliament.</p>
+      <p>对照悬停下面的 <em>commission</em>：应保留“佣金”，不套用机构名称。</p>
+      <p>The sales commission increased this year.</p>
+      <p>下面是未写入短语词库的试验例句：启用本机对齐后悬停 <em>Parliament</em>。若模型能可靠定位，应给出“议会”；否则应显示短语义或“暂无法确定”，不应把孤立词义冒充确定结果。</p>
+      <p>The European Parliament debated the proposal.</p>
+      <p>下面两例没有写入专用短语词库：悬停 <em>prime</em> 或 <em>credit</em>。当模型只能确认整短语时，应显示“短语义”，不能把“总理”“信用卡”当成单词的独立释义。</p>
+      <p>The prime minister spoke at the meeting.</p>
+      <p>Her credit card expired yesterday.</p>
+      <p>再悬停下句的 <em>stock</em>：若整句译为“评估局势”一类意译，应展示短语义或待确认，而非把“股票”当成句中词义。</p>
+      <p>We need to take stock of the situation before deciding.</p>
+    </section>
+
+    <section>
+      <h2>数据分析术语</h2>
+      <p>Write a query to retrieve rows from a table and aggregate sales by category.</p>
+      <p>The dashboard highlights a trend, an outlier, and customer retention.</p>
+      <p>A primary key uniquely identifies each row, while a foreign key connects two tables.</p>
+      <p>The database uses an index to retrieve the result set efficiently.</p>
+    </section>
+
+    <section>
+      <h2>拖拽翻译句子和自然段</h2>
+      <p>SQL allows analysts to retrieve, filter, aggregate, and combine data from relational databases. A well-written query should be accurate, readable, and consistent with the definition of each business metric.</p>
+      <p>Before drawing a conclusion, analysts should check missing values, duplicated records, join keys, and the time range of the dataset. These checks reduce the risk of producing misleading results.</p>
+    </section>
+
+    <section>
+      <h2>return：返回值与投资收益</h2>
+      <p>The function will return a value after the query is complete.</p>
+      <p>The investor expects a higher annual return from the asset.</p>
+    </section>
+
+    <section>
+      <h2>order：订单、排序与顺序</h2>
+      <p>The customer placed a new order for the product.</p>
+      <p>Use ORDER BY to sort the query result.</p>
+      <p>The order of execution determines the final result.</p>
+    </section>
+
+    <section>
+      <h2>stock：库存与股票</h2>
+      <p>The warehouse has insufficient stock for the next shipment.</p>
+      <p>The stock market opened higher after the announcement.</p>
+    </section>
+
+    <section>
+      <h2>动物学语境</h2>
+      <p>悬停下面的英文，检查同一个词在句子中的含义：</p>
+      <p>This family belongs to a larger order within the same class.</p>
+      <p>The species occupies a coastal habitat and preys on small invertebrates.</p>
+    </section>
+
+    <aside>
+      如果没有弹出：确认触发方式仍为“Alt＋悬停”；Windows系统中建议使用键盘左侧的 Alt 键。首次使用免费翻译，请先在设置中下载并启用本机英中语言包。
+    </aside>
+  </main>
+  <script src="rules.js"></script>
+  <script src="browser-translator.js"></script>
+  <script src="context-aligner.js"></script>
+  <script src="local-alignment-core.js"></script>
+  <script src="word-senses.js"></script>
+  <script src="pronunciation.js"></script>
+  <script src="content.js"></script>
+</body>
+</html>

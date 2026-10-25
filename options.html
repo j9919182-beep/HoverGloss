@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HoverGloss · 翻译设置</title>
+  <link rel="stylesheet" href="ui.css">
+</head>
+<body class="options-page">
+  <main class="settings-card">
+    <header>
+      <p class="eyebrow">HOVERGLOSS · 极简悬译</p>
+      <h1>翻译设置</h1>
+      <p>只给出当前语境下最可能的一个中文义项。</p>
+    </header>
+
+    <section>
+      <h2>翻译来源</h2>
+      <label class="field-label" for="sourceLanguage">阅读语言</label>
+      <select id="sourceLanguage"><option value="en">英语 → 中文</option><option value="fr">法语 → 中文</option></select>
+      <p class="hint">按所选语言翻译和收藏；英语、法语学习库分别保存。法语请使用本机翻译或 AI 模式。</p>
+      <label class="field-label" for="provider">模式</label>
+      <select id="provider">
+        <option value="smart">智能模式：上下文 AI（如已配置）→浏览器本机翻译</option>
+        <option value="browser">浏览器本机翻译（完全免费，无需密钥）</option>
+        <option value="ai">句子优先AI翻译（最准，需自行提供接口）</option>
+      </select>
+      <p class="hint" id="privacyHint"></p>
+
+      <div id="aiFields" class="subpanel">
+        <p class="subpanel-note" id="aiNote"></p>
+        <label class="field-label" for="aiEndpoint">兼容 Chat Completions 的接口地址</label>
+        <input id="aiEndpoint" type="url" spellcheck="false" placeholder="https://…/chat/completions">
+        <p class="hint">只接受 HTTPS 接口。目标文本和密钥会发送到你填写的服务商。</p>
+        <label class="field-label" for="aiModel">模型名称</label>
+        <input id="aiModel" type="text" placeholder="填写接口支持的模型" spellcheck="false">
+        <label class="field-label" for="aiKey">API密钥</label>
+        <input id="aiKey" type="password" autocomplete="off" placeholder="仅保存在本机浏览器中">
+      </div>
+    </section>
+
+    <section>
+      <h2>免费本机翻译</h2>
+      <p class="subpanel-note">准备上方所选语言的中文翻译模型。首次可能需要下载语言包，之后在本机翻译；法中和英中会分别检测。</p>
+      <div class="local-translator-row">
+        <button id="prepareLocalTranslator" class="primary-button" type="button">下载并启用本机翻译</button>
+        <span id="localTranslatorStatus" role="status">正在检测浏览器支持情况…</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>可选：本机词语对齐</h2>
+      <p class="subpanel-note">当前用于英语：先用整句译文判断悬停词对应的中文，仅在把握较低时后台补充结果。首次需主动下载约 150 MB 的模型，缓存在本机浏览器中；法语暂不使用此对齐增强。</p>
+      <label class="check-row"><input id="localAlignmentEnabled" type="checkbox">启用精准对齐增强</label>
+      <div class="local-translator-row">
+        <button id="prepareLocalAligner" type="button">下载并启用对齐模型</button>
+        <span id="localAlignerStatus" role="status">未准备模型</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>出现条件</h2>
+      <label class="field-label" for="hoverDelay">悬停等待时间：<span id="delayValue">450</span>毫秒</label>
+      <input id="hoverDelay" type="range" min="150" max="1200" step="50">
+      <label class="check-row"><input id="skipCommonWords" type="checkbox">跳过当前语言的常见虚词（英语 the、and；法语 le、et 等）</label>
+      <label class="check-row"><input id="skipAcronyms" type="checkbox">跳过 SQL、API 等全大写缩写</label>
+      <label class="check-row"><input id="showPartOfSpeech" type="checkbox">有词性信息时显示词性</label>
+      <label class="check-row"><input id="enableSentenceTranslation" type="checkbox">启用句子翻译（Shift＋悬停按键）</label>
+      <label class="check-row"><input id="selectionAutoTranslate" type="checkbox">拖拽选中句子或自然段后自动翻译</label>
+    </section>
+
+    <footer>
+      <button id="save" class="primary-button" type="button">保存设置</button>
+      <span id="saveStatus" role="status"></span>
+    </footer>
+  </main>
+  <script src="browser-translator.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HoverGloss · 翻译质量检查</title>
+  <link rel="stylesheet" href="evaluation.css">
+</head>
+<body>
+  <main>
+    <header>
+      <a href="demo.html">← 返回效果测试</a>
+      <h1>翻译质量检查</h1>
+      <p><a href="comparison.html">比较两份评测报告</a> · <a href="feedback.html">查看问题记录</a></p>
+      <p>用 100 个固定例句运行本机翻译，分别检查句意、单词义和短语义。参考命中只是筛选线索，准确度需要人工复核。</p>
+    </header>
+    <section class="controls">
+      <button id="prepare" type="button">准备本机翻译</button>
+      <label><input id="alignment" type="checkbox" disabled>使用已启用的本机对齐</label>
+      <span id="modelNote">正在读取模型设置…</span>
+      <div class="actions">
+        <label>范围 <select id="group"><option value="">全部 100 句</option></select></label>
+        <button id="run" type="button" disabled>开始检查</button>
+        <button id="stop" type="button" disabled>当前条完成后停止</button>
+        <button id="reset" type="button">清空本次记录</button>
+        <button id="export" type="button" disabled>导出报告</button>
+      </div>
+      <p id="status" role="status">先准备本机翻译，再开始检查。可按类别分批运行。</p>
+      <p class="hint">固定使用内置候选词库与浏览器模型，不调用 AI、不改变日常翻译设置。不会自动下载对齐模型；准备翻译时可能下载英中语言包。记录保存在此浏览器本地，导出后可用于版本对比。</p>
+    </section>
+    <section>
+      <p id="summary" aria-live="polite"></p>
+      <label>查看 <select id="filter">
+        <option value="">全部已运行结果</option>
+        <option value="needs-review">未完成人工复核</option>
+        <option value="mismatch">候选与参考不符</option>
+        <option value="pending">待确认</option>
+        <option value="wrong">人工确认有误</option>
+        <option value="error">运行失败</option>
+      </select></label>
+      <div id="results"></div>
+    </section>
+  </main>
+  <script src="glossary.js"></script>
+  <script src="browser-translator.js"></script>
+  <script src="context-aligner.js"></script>
+  <script src="local-alignment-core.js"></script>
+  <script src="evaluation-cases.js"></script>
+  <script src="evaluation-core.js"></script>
+  <script src="evaluation.js"></script>
+</body>
+</html>

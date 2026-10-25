@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "HoverGloss · 极简悬译",
+  "version": "0.9.31",
+  "description": "按需悬停或划词，翻译英语、法语词句，分语言保存原句、释义和发音学习记录。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "activeTab", "offscreen", "sidePanel"],
+  "optional_permissions": ["tabCapture"],
+  "side_panel": { "default_path": "live-captions.html" },
+  "host_permissions": ["https://*/*"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_title": "HoverGloss · 极简悬译",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*", "https://youtube.com/*", "https://www.bilibili.com/*", "https://bilibili.com/*"],
+      "js": ["live-captions-core.js", "caption-sites.js", "cc-session.js", "player-captions.js", "youtube-captions.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["rules.js", "browser-translator.js", "context-aligner.js", "local-alignment-core.js", "word-senses.js", "pronunciation.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*", "https://youtube.com/*",
+        "https://www.google.com/*", "https://google.com/*",
+        "https://www.google.com.hk/*", "https://google.com.hk/*",
+        "https://www.google.co.uk/*", "https://google.co.uk/*",
+        "https://www.google.co.jp/*", "https://google.co.jp/*",
+        "https://www.google.ca/*", "https://google.ca/*",
+        "https://www.google.com.au/*", "https://google.com.au/*",
+        "https://www.google.de/*", "https://google.de/*",
+        "https://www.google.fr/*", "https://google.fr/*",
+        "https://www.google.co.in/*", "https://google.co.in/*",
+        "https://www.google.com.sg/*", "https://google.com.sg/*",
+        "https://www.bing.com/*", "https://bing.com/*", "https://cn.bing.com/*",
+        "https://www.reddit.com/*", "https://reddit.com/*", "https://old.reddit.com/*",
+        "https://github.com/*", "https://stackoverflow.com/*", "https://www.stackoverflow.com/*",
+        "https://wikipedia.org/*", "https://*.wikipedia.org/*"
+      ],
+      "js": ["search-sites.js", "search-translator.js", "youtube-search-core.js", "youtube-search.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

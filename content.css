@@ -1,0 +1,213 @@
+#concise-hover-translator {
+  all: initial;
+  position: fixed;
+  z-index: 2147483647;
+  display: none;
+  width: max-content;
+  max-width: min(360px, calc(100vw - 20px));
+  overflow: hidden;
+  border: 1px solid #cdd9ec;
+  border-radius: 14px;
+  color: #17233a;
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(29, 50, 91, .2);
+  font: 400 13px/1.55 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  letter-spacing: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+#concise-hover-translator *,
+#concise-hover-translator *::before,
+#concise-hover-translator *::after { box-sizing: border-box; }
+
+#concise-hover-translator.is-loading {
+  min-width: 42px;
+  padding: 9px 13px;
+  border-color: rgba(255, 255, 255, .16);
+  border-radius: 10px;
+  color: #dbe7ff;
+  background: rgba(24, 35, 58, .96);
+  text-align: center;
+}
+
+#concise-hover-translator.is-error {
+  max-width: min(320px, calc(100vw - 20px));
+  padding: 10px 13px;
+  border-color: #efc5c5;
+  color: #8f3030;
+  background: #fff7f7;
+  font-size: 12px;
+}
+
+#concise-hover-translator.is-pinned,
+
+#concise-hover-translator .cht-topic-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #dbe3ef;
+  color: #244eae;
+  background: #f5f8ff;
+  font-size: 11px;
+}
+
+#concise-hover-translator .cht-topic-bar strong { font-weight: 650; }
+#concise-hover-translator .cht-source { color: #2f7d5b; }
+#concise-hover-translator .cht-word-body { min-width: 250px; max-height: min(72vh, 560px); padding: 12px 13px 13px; overflow-y: auto; }
+#concise-hover-translator .cht-word-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+#concise-hover-translator .cht-target { color: #17233a; font: 600 16px/1.25 Georgia, "Times New Roman", serif; }
+#concise-hover-translator .cht-pos { display: inline-block; margin-top: 3px; color: #68758a; font-size: 11px; }
+#concise-hover-translator .cht-best { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 11px; }
+#concise-hover-translator .cht-best span { color: #68758a; font-size: 11px; }
+#concise-hover-translator .cht-best strong { color: #244eae; font-size: 15px; font-weight: 650; }
+#concise-hover-translator .cht-meanings { display: grid; gap: 7px; margin-top: 11px; }
+#concise-hover-translator .cht-meaning { min-width: 0; padding: 8px 10px 9px; border: 1px solid #d8e2f1; border-radius: 9px; background: #f8faff; }
+#concise-hover-translator .cht-meaning-phrase { border-color: #b9cdf9; background: #eef4ff; }
+#concise-hover-translator .cht-meaning-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #48618c; font-size: 11px; font-weight: 700; }
+#concise-hover-translator .cht-meaning-heading small { padding: 1px 6px; border-radius: 999px; color: #775c2d; background: #fff0d2; font-size: 10px; font-weight: 600; }
+#concise-hover-translator .cht-meaning-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 10px; margin-top: 3px; }
+#concise-hover-translator .cht-meaning-original { min-width: 0; color: #344766; font-size: 13px; font-weight: 650; overflow-wrap: anywhere; }
+#concise-hover-translator .cht-meaning-translation { max-width: 180px; color: #244eae; font-size: 16px; font-weight: 700; line-height: 1.4; text-align: right; overflow-wrap: anywhere; }
+#concise-hover-translator .cht-meaning-common .cht-meaning-translation { color: #3d5c8e; }
+#concise-hover-translator .cht-meaning-tentative .cht-meaning-translation { color: #394a63; }
+#concise-hover-translator .cht-sentence-meaning { margin-top: 10px; color: #58667e; font-size: 11px; line-height: 1.6; }
+#concise-hover-translator .cht-word-review-note { margin-top: 8px; color: #775c2d; font-size: 11px; line-height: 1.5; }
+#concise-hover-translator .cht-sentence-fallback { padding: 8px 10px; border-radius: 8px; background: #f0f5ff; color: #344766; font-size: 12px; }
+#concise-hover-translator .cht-explanation { margin-top: 9px; border-top: 1px solid #e2e8f2; }
+#concise-hover-translator .cht-explanation summary { padding-top: 7px; color: #4265a7; font-size: 11px; font-weight: 600; cursor: pointer; }
+#concise-hover-translator .cht-explanation summary:focus-visible { outline: 2px solid #3867d6; outline-offset: 2px; border-radius: 3px; }
+#concise-hover-translator .cht-context {
+  margin-top: 7px;
+  padding: 8px 9px;
+  border-left: 3px solid #3867d6;
+  border-radius: 2px 8px 8px 2px;
+  color: #42506a;
+  background: #f5f8ff;
+  font-size: 11px;
+}
+#concise-hover-translator .cht-context span { display: block; margin-bottom: 2px; color: #68758a; }
+#concise-hover-translator .cht-alignment,
+#concise-hover-translator .cht-phrase,
+#concise-hover-translator .cht-evidence,
+#concise-hover-translator .cht-confidence,
+#concise-hover-translator .cht-review,
+#concise-hover-translator .cht-alternatives { margin-top: 5px; color: #58667e; }
+#concise-hover-translator .cht-alignment { color: #315fc7; font-weight: 700; }
+#concise-hover-translator .cht-review { color: #315fc7; }
+
+#concise-hover-translator.is-sentence,
+#concise-hover-translator.is-passage { max-width: min(560px, calc(100vw - 20px)); }
+#concise-hover-translator.is-passage { max-width: min(660px, calc(100vw - 20px)); max-height: min(62vh, 520px); overflow-y: auto; }
+#concise-hover-translator .cht-passage-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 12px; border-bottom: 1px solid #dbe3ef; color: #244eae; background: #f5f8ff; font-size: 11px; }
+#concise-hover-translator .cht-passage-head span { display: inline-flex; align-items: center; gap: 6px; }
+#concise-hover-translator .cht-close {
+  all: initial;
+  padding: 3px 6px;
+  border-radius: 6px;
+  color: #68758a;
+  background: #e9edf4;
+  font: 500 11px/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  cursor: pointer;
+}
+#concise-hover-translator .cht-passage-body { padding: 12px 13px; }
+#concise-hover-translator .cht-original { max-height: 92px; margin: 0 0 10px; padding-bottom: 10px; overflow: hidden; border-bottom: 1px solid #dbe3ef; color: #7a8597; font: 400 12px/1.55 Georgia, "Times New Roman", serif; white-space: pre-wrap; }
+#concise-hover-translator .cht-translation { margin: 0; color: #17233a; font-size: 14px; line-height: 1.7; white-space: pre-wrap; }
+#concise-hover-translator .cht-passage-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 11px; }
+#concise-hover-translator .cht-action {
+  all: initial;
+  border-radius: 7px;
+  padding: 5px 9px;
+  color: #244eae;
+  background: #e9f0ff;
+  font: 600 11px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  cursor: pointer;
+}
+#concise-hover-translator .cht-action:hover { background: #dce7ff; }
+#concise-hover-translator .cht-feedback-footer { margin-top: 8px; }
+#concise-hover-translator .cht-feedback-open { all: initial; color: #68758a; font: 400 10px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; cursor: pointer; text-decoration: underline; }
+#concise-hover-translator .cht-feedback-form[hidden],
+#concise-hover-translator .cht-feedback-open[hidden] { display: none; }
+#concise-hover-translator .cht-feedback-form { padding: 9px; border: 1px solid #d8e2f1; border-radius: 8px; background: #f8faff; font-size: 11px; }
+#concise-hover-translator .cht-feedback-form p { margin: 0 0 7px; }
+#concise-hover-translator .cht-feedback-form label { display: block; margin-top: 7px; }
+#concise-hover-translator .cht-feedback-form select,
+#concise-hover-translator .cht-feedback-form textarea { all: initial; box-sizing: border-box; display: block; width: 100%; margin-top: 4px; padding: 6px; border: 1px solid #c7d5ec; border-radius: 6px; color: inherit; background: #fff; font: inherit; }
+#concise-hover-translator .cht-feedback-form textarea { resize: vertical; min-height: 48px; }
+#concise-hover-translator .cht-feedback-actions { display: flex; gap: 8px; margin: 9px 0 6px; }
+#concise-hover-translator .cht-feedback-status { color: #315fc7; }
+#concise-hover-translator .cht-feedback-open:focus-visible,
+#concise-hover-translator .cht-feedback-form select:focus-visible,
+#concise-hover-translator .cht-feedback-form textarea:focus-visible { outline: 2px solid #3867d6; outline-offset: 2px; }
+#concise-hover-translator .cht-study-save { flex: none; white-space: nowrap; }
+#concise-hover-translator .cht-study-save:disabled { opacity: .65; cursor: default; }
+#concise-hover-translator .cht-pronounce:disabled,
+#concise-hover-translator .cht-phrase-form button:disabled { opacity: .65; cursor: default; }
+#concise-hover-translator .cht-word-head { flex-wrap: wrap; }
+#concise-hover-translator .cht-pronounce { margin: 5px 0; font-size: 11px; }
+#concise-hover-translator .cht-phrase-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 7px; }
+#concise-hover-translator .cht-phrase-study { margin-top: 12px; }
+#concise-hover-translator .cht-phrase-form[hidden] { display: none; }
+#concise-hover-translator .cht-phrase-form { margin-top: 8px; padding: 10px; border: 1px solid #cdd9ec; border-radius: 8px; background: #f5f8ff; }
+#concise-hover-translator .cht-phrase-form p { margin: 5px 0; }
+#concise-hover-translator .cht-phrase-form label { display: block; margin: 8px 0; }
+#concise-hover-translator .cht-phrase-form select,
+#concise-hover-translator .cht-phrase-form input { all: initial; box-sizing: border-box; display: block; width: 100%; padding: 6px; margin-top: 4px; border: 1px solid #c7d5ec; border-radius: 6px; background: #fff; color: inherit; font: inherit; }
+#concise-hover-translator .cht-study-status,
+#concise-hover-translator .cht-speech-status { color: #526789; font-size: 11px; line-height: 1.5; }
+#concise-hover-translator .cht-phrase-form input:focus-visible,
+#concise-hover-translator .cht-phrase-form select:focus-visible,
+#concise-hover-translator .cht-pronounce:focus-visible,
+#concise-hover-translator .cht-study-save:focus-visible { outline: 2px solid #3867d6; outline-offset: 2px; }
+
+@media (prefers-color-scheme: dark) {
+  #concise-hover-translator .cht-phrase-form,
+  #concise-hover-translator .cht-phrase-form input,
+  #concise-hover-translator .cht-phrase-form select { color: #e6edfa; background: #242f43; border-color: #3b4a63; }
+  #concise-hover-translator .cht-study-status,
+  #concise-hover-translator .cht-speech-status { color: #b0bdd1; }
+  #concise-hover-translator .cht-feedback-open { color: #b0bdd1; }
+  #concise-hover-translator .cht-feedback-form,
+  #concise-hover-translator .cht-feedback-form select,
+  #concise-hover-translator .cht-feedback-form textarea { color: #e6edfa; background: #242f43; border-color: #3b4a63; }
+  #concise-hover-translator .cht-feedback-status { color: #aac3ff; }
+  #concise-hover-translator { border-color: #3b4962; color: #edf3ff; background: #202838; box-shadow: 0 18px 42px rgba(0,0,0,.42); }
+  #concise-hover-translator .cht-topic-bar,
+  #concise-hover-translator .cht-passage-head { border-color: #344056; color: #bfd0ff; background: #1b263c; }
+  #concise-hover-translator .cht-source { color: #86d2ad; }
+  #concise-hover-translator .cht-target,
+  #concise-hover-translator .cht-translation { color: #edf3ff; }
+  #concise-hover-translator .cht-pos,
+  #concise-hover-translator .cht-best span,
+  #concise-hover-translator .cht-context span,
+  #concise-hover-translator .cht-original { color: #aab6cb; }
+  #concise-hover-translator .cht-action { color: #bfd0ff; background: #233458; }
+  #concise-hover-translator .cht-best strong { color: #bfd0ff; }
+  #concise-hover-translator .cht-meaning { border-color: #3b4a63; background: #242f43; }
+  #concise-hover-translator .cht-meaning-phrase { border-color: #617fbd; background: #233858; }
+  #concise-hover-translator .cht-meaning-heading { color: #b5c9f4; }
+  #concise-hover-translator .cht-meaning-heading small { color: #f4d49b; background: #55462d; }
+  #concise-hover-translator .cht-meaning-original { color: #dae4f5; }
+  #concise-hover-translator .cht-meaning-translation { color: #c4d5ff; }
+  #concise-hover-translator .cht-meaning-common .cht-meaning-translation { color: #c0d1ed; }
+  #concise-hover-translator .cht-meaning-tentative .cht-meaning-translation { color: #d2d9e7; }
+  #concise-hover-translator .cht-explanation { border-color: #344056; }
+  #concise-hover-translator .cht-explanation summary { color: #b5c9f4; }
+  #concise-hover-translator .cht-context { border-color: #91afff; color: #d4dbea; background: #1b263c; }
+  #concise-hover-translator .cht-sentence-meaning { color: #b9c4d8; }
+  #concise-hover-translator .cht-sentence-fallback { color: #dae4f5; background: #233858; }
+  #concise-hover-translator .cht-word-review-note { color: #f4d49b; }
+  #concise-hover-translator .cht-alignment,
+  #concise-hover-translator .cht-phrase,
+  #concise-hover-translator .cht-evidence,
+  #concise-hover-translator .cht-confidence,
+  #concise-hover-translator .cht-review,
+  #concise-hover-translator .cht-alternatives { color: #b9c4d8; }
+  #concise-hover-translator .cht-alignment { color: #a9c1ff; }
+  #concise-hover-translator .cht-review { color: #a9c1ff; }
+  #concise-hover-translator .cht-passage-head,
+  #concise-hover-translator .cht-original { border-color: #344056; }
+  #concise-hover-translator .cht-close { color: #aab6cb; background: #2b3547; }
+}

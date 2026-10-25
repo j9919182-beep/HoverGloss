@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PDF 阅读 · HoverGloss</title>
+  <link rel="stylesheet" href="pdf-reader.css">
+  <link rel="stylesheet" href="content.css">
+</head>
+<body>
+  <header class="reader-toolbar" data-concise-hover-ignore>
+    <div class="reader-brand"><img src="icons/icon32.png" alt="" width="28" height="28"><strong>HoverGloss</strong><span>PDF 精读</span></div>
+    <button id="toggleOutline" class="outline-toggle" type="button" aria-controls="outlinePanel" aria-expanded="false" disabled>☷ 目录</button>
+    <label class="pdf-learning-toggle"><input id="learningMode" type="checkbox">学习模式</label>
+    <button id="openLearning" class="outline-toggle" type="button">学习库</button>
+    <button id="cleanSelection" class="outline-toggle" type="button" disabled>整理选中文字</button>
+    <button id="cleanPage" class="outline-toggle" type="button" disabled>整理当前页</button>
+    <button id="toggleOcr" class="outline-toggle" type="button" aria-controls="ocrTools" aria-expanded="false" disabled>OCR 识字</button>
+    <div class="reader-source">
+      <button id="openFile" type="button">打开本地 PDF</button>
+      <input id="fileInput" type="file" accept=".pdf,application/pdf" hidden>
+      <form id="urlForm"><label for="pdfUrl">或粘贴 HTTPS 链接</label><input id="pdfUrl" type="url" placeholder="https://example.com/article.pdf" autocomplete="off"><button type="submit">打开</button></form>
+    </div>
+    <div class="reader-pages"><button id="prevPage" type="button" aria-label="上一页" title="上一页（←）" disabled>‹</button><form id="pageJumpForm" class="page-jump"><input id="pageInput" type="number" inputmode="numeric" min="1" aria-label="输入页码，回车跳转" title="输入页码，回车跳转" disabled><span id="pageTotal">/ —</span></form><button id="nextPage" type="button" aria-label="下一页" title="下一页（→）" disabled>›</button><button id="zoomOut" type="button" aria-label="缩小" disabled>−</button><span id="zoomValue">100%</span><button id="zoomIn" type="button" aria-label="放大" disabled>＋</button></div>
+  </header>
+  <main>
+    <div id="documentTabs" class="document-tabs" role="tablist" aria-label="已打开的 PDF" data-concise-hover-ignore hidden></div>
+    <div class="reader-intro">Alt 悬停单词、拖选句段翻译；左右方向键翻页。扫描件或复制乱码时，可点击“OCR 识字”重新识别。</div>
+    <div id="resumePrompt" class="resume-prompt" data-concise-hover-ignore hidden><span id="resumeText"></span><button id="resumeContinue" type="button">继续阅读</button><button id="resumeStart" type="button">从第 1 页开始</button></div>
+    <div id="status" class="reader-status" role="status">打开本地 PDF，或粘贴可直接下载的 HTTPS PDF 链接。</div>
+    <section id="ocrTools" class="ocr-tools" aria-label="本地 OCR" data-concise-hover-ignore hidden>
+      <div class="ocr-actions">
+        <strong>本地 OCR</strong><label>识别语言 <select id="ocrLanguage"><option value="eng">英文</option><option value="chi_sim+eng">简体中文＋英文</option></select></label>
+        <button id="ocrCurrentPage" type="button">重新识别当前页</button><button id="ocrSelectRegion" type="button">框选区域识别</button><button id="ocrCancel" type="button" hidden>取消</button>
+      </div>
+      <p id="ocrStatus" role="status">识别后可在原页 Alt 悬停查词、拖选翻译；点击“整理当前页”可核对并复制。识字在本机完成。</p>
+    </section>
+    <section id="cleanCopyPanel" class="clean-copy-panel" aria-label="PDF 干净复制" data-concise-hover-ignore hidden>
+      <div class="clean-copy-heading"><strong id="cleanCopyTitle">PDF 干净复制</strong><button id="closeCleanCopy" type="button">收起</button></div>
+      <div class="clean-copy-options">
+        <label>阅读顺序 <select id="cleanCopyOrder"><option value="auto">自动分栏</option><option value="original">原始存储顺序</option></select></label>
+        <label><input id="cleanMergeLines" type="checkbox" checked>合并段内断行</label>
+        <label><input id="cleanJoinHyphens" type="checkbox">连接行末断词（请核对）</label>
+      </div>
+      <p id="cleanCopyNotice" class="clean-copy-notice" role="status"></p>
+      <div class="clean-copy-previews">
+        <label>提取原文<textarea id="cleanCopyRaw" rows="7" readonly spellcheck="false"></textarea></label>
+        <label>整理结果（可编辑）<textarea id="cleanCopyResult" rows="7" spellcheck="false"></textarea></label>
+      </div>
+      <div class="clean-copy-actions"><button id="copyCleanText" type="button" disabled>复制整理结果</button><span id="cleanCopyStatus" role="status"></span></div>
+      <p class="clean-copy-hint">整理与 OCR 均在本机进行。复杂排版可切换原始顺序或手动修改；识别结果请对照原页核对。</p>
+    </section>
+    <div class="reader-layout">
+      <aside id="outlinePanel" class="outline-panel" aria-label="PDF 章节目录" hidden>
+        <div class="outline-header"><strong>章节目录</strong><button id="closeOutline" type="button" aria-label="收起目录">收起</button></div>
+        <p id="outlineEmpty" class="outline-empty">此 PDF 没有内置章节目录。可以识别书页上印刷的目录，或输入页码跳转。</p>
+        <div id="tocTools" class="toc-tools" hidden>
+          <div class="toc-actions"><button id="scanToc" type="button">识别前 40 页</button><button id="scanCurrentToc" type="button">将当前页识别为目录</button></div>
+          <p id="tocStatus" class="toc-status" role="status">按需读取可选中文字和 PDF 自带的目录按钮；扫描图片暂不支持。</p>
+          <div id="tocCalibration" class="toc-calibration" hidden>
+            <label for="tocOffset">页码差：PDF 页码 = 书中页码 + <input id="tocOffset" type="number" step="1" value="0" aria-label="PDF 页码与书中页码的差值"></label>
+            <p id="tocMappingHint">点击章节前，请核对跳转页码；不一致时调整页码差。</p>
+            <div class="toc-actions"><button id="saveToc" type="button">保存本地目录</button><button id="clearToc" type="button" hidden>删除已保存目录</button></div>
+          </div>
+        </div>
+        <nav id="outlineList" aria-label="章节跳转"></nav>
+      </aside>
+      <section id="pageStage" class="page-stage" aria-label="PDF 页面" hidden>
+        <div id="paper" class="paper"><canvas id="pageCanvas"></canvas><div id="textLayer" class="textLayer"></div><div id="ocrRegionOverlay" class="ocr-region-overlay" aria-label="拖动框选要识别的区域，松开开始识别，Esc 取消" data-concise-hover-ignore hidden><span class="ocr-region-hint">拖动框选，松开开始识别 · Esc 取消</span><div id="ocrRegionBox" class="ocr-region-box" hidden></div></div></div>
+      </section>
+    </div>
+  </main>
+  <script src="pdf-source.js"></script>
+  <script src="pdf-navigation.js"></script>
+  <script src="pdf-session.js"></script>
+  <script src="pdf-context.js"></script>
+  <script src="pdf-clean-copy.js"></script>
+  <script src="pdf-ocr.js"></script>
+  <script src="toc-detect.js"></script>
+  <script src="rules.js"></script>
+  <script src="browser-translator.js"></script>
+  <script src="context-aligner.js"></script>
+  <script src="local-alignment-core.js"></script>
+  <script src="word-senses.js"></script>
+  <script src="pronunciation.js"></script>
+  <script src="content.js"></script>
+  <script type="module" src="pdf-reader.js"></script>
+</body>
+</html>

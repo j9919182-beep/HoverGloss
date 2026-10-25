@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>学习库 · HoverGloss</title>
+  <link rel="stylesheet" href="learning.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div><p class="eyebrow">HOVERGLOSS · 在语境中积累</p><h1 id="libraryTitle">英语学习库</h1><p class="muted">把遇见的词，留在读过的句子里。</p><label for="libraryLanguage">选择学习库</label><select id="libraryLanguage"><option value="en">英语学习库</option><option value="fr">法语学习库</option></select></div>
+      <div class="header-actions"><label><input id="learningMode" type="checkbox"> 开启学习模式</label><button id="exportLibrary" type="button">导出记录</button><button id="importLibrary" type="button">导入记录</button><input id="importFile" type="file" accept=".json,application/json" hidden></div>
+    </header>
+    <div class="summary"><p id="stats">正在读取学习记录…</p><button id="startReview" class="primary" type="button" disabled>复习到期单词</button></div>
+    <p id="notice" role="status" aria-live="polite"></p>
+    <section id="importPreview" class="panel" hidden aria-label="学习库导入预览">
+      <h2>导入预览</h2><p id="importSummary"></p><ul id="importSamples"></ul><p class="muted small">相同单词、原句与来源会合并关联短语；保留已有释义、笔记和复习进度。新记录恢复备份中的复习进度。</p>
+      <div class="actions"><button id="confirmImport" class="primary" type="button">确认合并导入</button><button id="cancelImport" type="button">取消</button></div>
+    </section>
+    <details id="speechDiagnostics" class="speech-diagnostics">
+      <summary>发音设置与检测 · 本机优先 / 可选在线</summary>
+      <label class="inline"><input id="allowOnlineSpeech" type="checkbox" disabled aria-describedby="onlineSpeechPrivacy"> 允许在线发音（默认关闭）</label>
+      <p id="onlineSpeechPrivacy" class="muted small">优先使用当前学习语言的本机声音；允许在线发音后，没有本机声音时可使用浏览器提供的同语言在线声音。点击单词/短语发音只发送目标文字；主动点击“朗读原句”将该原句交给 Edge 提供的 Microsoft 在线语音服务，不附带文件名、链接或整篇文章。需要联网，无需填写密钥。设置同时适用于网页、PDF 和两个学习库，关闭后停止当前在线朗读。</p>
+      <p id="onlineSpeechStatus" role="status" aria-live="polite">正在读取发音设置…</p>
+      <p class="muted small">下面的检测只读取声音列表，不会自动朗读、下载语音或开启在线发音。列出声音不代表播放已验证。</p>
+      <button id="detectVoices" type="button">检测可用语音</button>
+      <p id="voiceStatus" role="status" aria-live="polite"></p>
+      <ul id="voiceList" aria-label="浏览器返回的语音"></ul>
+      <p class="muted small">缺少本机声音时，可在 Windows 设置 → 时间和语言 → 语音 → 管理语音中添加对应的英语或法语声音。翻译语言包与朗读声音需要分别准备；也可手动允许在线发音。</p>
+    </details>
+    <section id="reviewPanel" class="review panel" hidden aria-label="单词复习">
+      <div class="review-top"><span id="reviewProgress"></span><button id="exitReview" type="button">结束本次复习</button></div>
+      <div class="term-line"><h2 id="reviewWord"></h2><div id="reviewAudio"></div></div><p id="reviewContext" class="original"></p>
+      <div id="reviewContextAudio"></div><p id="reviewContextAudioHint" class="muted small" hidden>使用在线声音时，点击会将上方英文原句交给 Edge 提供的 Microsoft 在线语音服务；再次点击可停止。</p>
+      <button id="showAnswer" class="primary" type="button">显示答案</button>
+      <div id="reviewAnswer" hidden><p id="reviewMeaning" class="meaning"></p><div id="reviewPhrase"></div><p id="reviewSentence"></p><p id="reviewWarning" class="warning"></p><p id="reviewSource" class="muted"></p>
+        <div id="reviewGrammar" hidden></div>
+        <div class="actions"><button id="reviewAgain" type="button">忘了 · 10 分钟后</button><button id="reviewRemember" class="primary" type="button">记得</button></div>
+      </div>
+      <p class="muted small">先结合原句回想，再显示答案。连续记得的间隔依次为 1、3、7、14、30 天；这是固定间隔复习。</p>
+    </section>
+    <div id="libraryPanel" class="library">
+      <section class="panel sidebar" aria-label="学习记录列表">
+        <label for="search">查找记录</label><input id="search" type="search" placeholder="单词、短语、释义、原句或文件名">
+        <label for="filter">筛选</label><select id="filter"><option value="all">全部记录</option><option value="due">待复习</option><option value="uncertain">释义待核对</option><option value="familiar">已熟悉（连续记得 ≥ 3 次）</option></select>
+        <p id="listCount" class="muted small"></p><button id="refreshLibrary" type="button">刷新列表</button><div id="entries"></div>
+      </section>
+      <section class="panel detail" aria-label="单词详情">
+        <div id="empty"><h2>从阅读中收藏第一个词</h2><p>开启学习模式，在网页或 PDF 中悬停翻译，再点击“加入学习库”。</p><p class="muted">只保存你主动选择的记录。关闭学习模式不影响查看和复习。</p></div>
+        <div id="detail" hidden>
+          <div class="detail-top"><div class="term-line"><h2 id="term"></h2><div id="termAudio"></div></div><span id="meaningLabel" class="badge"></span></div>
+          <p id="meaning" class="meaning"></p><p id="uncertain" class="warning" hidden>此释义尚未确认为句中义，请结合原句核对；收藏不会提高译文的可信度。</p>
+          <h3 id="phraseHeading" hidden>关联短语 · 与本词一起记忆</h3><div id="phrase"></div><p id="commonMeaning" class="muted"></p>
+          <div class="sentence-heading"><h3>记录时的原句</h3><div id="contextAudio"></div></div><p id="context" class="original"></p><p id="contextAudioHint" class="muted small" hidden>使用在线声音时，点击会将上方英文原句交给 Edge 提供的 Microsoft 在线语音服务；再次点击可停止。</p><p id="sentenceTranslation"></p>
+          <div id="grammar" hidden></div>
+          <h3>阅读来源</h3><p id="sourceName"></p><a id="sourceLink" target="_blank" rel="noopener noreferrer" hidden>打开来源</a><p id="sourceHint" class="muted small"></p><p id="metadata" class="muted small"></p>
+          <details class="edit"><summary>编辑释义与学习笔记</summary>
+            <form id="editForm"><label for="editMeaning">释义</label><textarea id="editMeaning" rows="2" maxlength="500" required></textarea><label for="notes">学习笔记</label><textarea id="notes" rows="3" maxlength="2000" placeholder="写下你的理解或记忆方法"></textarea><label class="inline"><input id="confirmed" type="checkbox"> 我已核对并确认这条释义</label><button class="primary" type="submit">保存修改</button></form>
+          </details>
+          <button id="deleteEntry" class="danger" type="button">删除此条记录</button>
+        </div>
+      </section>
+    </div>
+    <footer>学习记录保存在当前浏览器，不跨设备同步；手动使用 AI 语法解析时会发送本条原句。卸载扩展或清除扩展数据会删除记录。每个语言库最多 1000 条，建议定期导出。此处保存的是收藏时的译义与语境，并非完整词典。</footer>
+  </main>
+  <script src="pronunciation.js"></script>
+  <script src="french-grammar-local.js"></script>
+  <script src="learning-grammar.js"></script>
+  <script src="learning.js"></script>
+</body>
+</html>

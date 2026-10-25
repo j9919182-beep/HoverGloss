@@ -1,0 +1,20 @@
+# Local credentials, exports and generated packages
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crx
+*.zip
+*主题词库-*.json
+exports/
+
+# Development artifacts
+node_modules/
+.browser-test/
+coverage/
+test-results/
+dist/
+*.log
+.DS_Store
+Thumbs.db
