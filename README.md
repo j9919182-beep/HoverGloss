@@ -4,6 +4,8 @@
 
 **在阅读的位置理解词句。** 面向英语、法语阅读的 Chrome / Edge 扩展：悬停查词、PDF 精读、语境学习库，以及可选的双语字幕。
 
+**[下载扩展安装包（v0.9.31 Preview）](https://github.com/j9919182-beep/HoverGloss/releases/download/v0.9.31-preview/HoverGloss-v0.9.31-preview.zip)** · [发布说明与其他附件](https://github.com/j9919182-beep/HoverGloss/releases/tag/v0.9.31-preview)
+
 [English](README.en.md) · [安装与首次使用](docs/INSTALL.md) · [隐私说明](PRIVACY.md) · [更新日志](CHANGELOG.md)
 
 > 当前为 **v0.9.31 Preview**，尚未上架浏览器扩展商店。翻译、词语对齐和字幕结果可能有误，请结合原文核对。
@@ -20,7 +22,7 @@
 
 ## 开始使用
 
-1. 在本仓库 **Releases** 下载 `HoverGloss-v0.9.31-preview.zip` 并解压；也可下载完整源码。
+1. [下载扩展安装包](https://github.com/j9919182-beep/HoverGloss/releases/download/v0.9.31-preview/HoverGloss-v0.9.31-preview.zip)并解压；源码和校验文件见 [Release 发布页](https://github.com/j9919182-beep/HoverGloss/releases/tag/v0.9.31-preview)。
 2. 打开 `edge://extensions` 或 `chrome://extensions`，开启开发人员模式，点击“加载解压缩的扩展”。
 3. 选择直接包含 `manifest.json` 的文件夹。安装即用，不需要 Node.js 或自行构建。
 4. 打开 HoverGloss 设置，选择阅读语言，主动准备本机翻译；再在网页弹窗中开启“当前网站”。
