@@ -1,0 +1,30 @@
+"use strict";
+const assert = require("node:assert/strict");
+const { Overlay } = require("../player-captions.js");
+const realNow = Date.now;
+let now = 0; Date.now = () => now;
+try {
+  const overlay = new Overlay(null); overlay.render = () => {};
+  overlay.configure({ mode: "below", hold: 4000 });
+  overlay.cue = { id: 1, text: "First English sentence" };
+  assert.equal(overlay.translation(1, overlay.cue.text, "第一句中文"), true);
+  assert.equal(overlay.shown.id, 1);
+  now = 500; overlay.cue = { id: 2, text: "Second English sentence" }; overlay.advance();
+  assert.equal(overlay.shown.id, 1, "A rolling English edit must not instantly clear readable Chinese");
+  overlay.translation(2, overlay.cue.text, "第二句中文");
+  now = 1000; overlay.cue = { id: 3, text: "Newest English sentence" };
+  overlay.translation(3, overlay.cue.text, "最新的中文");
+  assert.equal(overlay.pending.id, 3, "Only the newest completed candidate is retained; no reading backlog");
+  assert.equal(overlay.translation(2, "Second English sentence", "过期结果"), false);
+  now = 3999; overlay.advance(); assert.equal(overlay.shown.id, 1);
+  now = 4000; overlay.advance(); assert.equal(overlay.shown.id, 3);
+  assert.equal(overlay.shown.since, 4000);
+  now = 4500; overlay.gap(); assert.equal(overlay.shown.id, 3, "A short CC gap preserves a matched pair for reading");
+  now = 8000; overlay.gap(); assert.equal(overlay.shown, null, "Carryover expires rather than staying forever");
+  overlay.cue = { id: 4, text: "A long sentence" };
+  overlay.translation(4, overlay.cue.text, "长".repeat(100));
+  assert.equal(overlay.duration(overlay.shown), 8000, "Long text extends reading time with a bounded maximum");
+  overlay.clear(); assert.equal(overlay.shown, null); assert.equal(overlay.pending, null);
+  assert.equal(overlay.translation(4, "A long sentence", "seek/stop must reject this"), false);
+  console.log("Chinese reading hold, latest-only replacement, bounded gaps, long text and hard clear: passed");
+} finally { Date.now = realNow; }

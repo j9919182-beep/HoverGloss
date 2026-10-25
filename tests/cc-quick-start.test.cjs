@@ -1,0 +1,22 @@
+"use strict";
+const assert = require("node:assert/strict");
+const { fixture, turn } = require("./cc-session-fixture.cjs");
+(async () => {
+  const f = fixture(), p = f.connect();
+  p.command({ type: "arm-start", player: { mode: "below", fullscreen: true } });
+  const controls = () => f.player.children.find((n) => n.id === "hovergloss-cc-session").shadowRoot.children[1].children;
+  assert.equal(f.activations, 0); assert.equal(f.intervals.size, 0);
+  assert.equal(controls()[1].textContent, "开始双语字幕");
+  await controls()[1].click();
+  assert.equal(f.activations, 1); assert.equal(f.intervals.size, 1);
+  assert.equal(p.messages.findLast((m) => m.snapshot).snapshot.state, "running");
+  f.advance(500); f.translations[0].resolve({ translation: "一次点击就能开始" }); await turn();
+  assert.equal(f.overlays[0].pairs.at(-1).translation, "一次点击就能开始");
+  await controls()[3].click();
+  assert.equal(f.intervals.size, 0); assert.equal(controls()[1].hidden, false);
+  await controls()[1].click(); assert.equal(f.intervals.size, 1);
+  assert.equal(f.activations, 1, "Restart reuses prepared model");
+  await controls()[3].click();
+  p.command({ type: "disarm-start" }); assert.equal(f.player.children.length, 0);
+  console.log("CC quick start: no work on arm, one click prepares/starts, stop/restart, reuse and audio-mode disarm passed");
+})().catch((error) => { console.error(error); process.exitCode = 1; });

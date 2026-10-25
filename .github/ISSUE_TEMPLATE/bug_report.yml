@@ -1,0 +1,42 @@
+name: 问题反馈 / Bug report
+description: 提供可复现步骤，帮助定位翻译、PDF、学习库或字幕问题
+body:
+  - type: input
+    id: version
+    attributes:
+      label: HoverGloss 与浏览器版本
+      placeholder: 例如 HoverGloss 0.9.31，Edge 的完整版本号，Windows 版本
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: 功能
+      options:
+        - 网页翻译
+        - PDF 取文或 OCR
+        - 学习库或发音
+        - 双语字幕
+        - 搜索转英文
+        - 安装或其他
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤、预期结果与实际结果
+      description: 如与模型有关，请说明本机或自备 AI 模式。请使用脱敏句子或自建样例。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 可选截图或错误文字
+      description: 不要上传私人文档、学习库原始备份或完整账号信息。
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 提交确认
+      options:
+        - label: 已移除密钥、私人阅读内容和账号信息；有权公开附带的材料。
+          required: true

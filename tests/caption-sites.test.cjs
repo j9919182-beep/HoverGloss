@@ -1,0 +1,16 @@
+"use strict";
+const assert = require("node:assert/strict");
+const core = require("../live-captions-core.js"), sites = require("../caption-sites.js");
+assert.equal(core.videoId("https://www.bilibili.com/video/BV1xx411c7mD/?p=2&t=30"), "bilibili:BV1xx411c7mD:p2");
+assert.equal(core.videoId("https://bilibili.com/video/av12345"), "bilibili:av12345:p1");
+assert.notEqual(core.videoId("https://www.bilibili.com/video/BV1xx411c7mD/?p=1"), core.videoId("https://www.bilibili.com/video/BV1xx411c7mD/?p=2"));
+for (const url of ["https://bilibili.com.evil.test/video/BV1xx411c7mD", "https://live.bilibili.com/1", "http://www.bilibili.com/video/av1234", "https://www.bilibili.com/video/BV1xx411c7mD/?p=-1", "https://www.bilibili.com/bangumi/play/ep1"]) assert.equal(core.videoId(url), "");
+const bili = sites.forURL("https://www.bilibili.com/");
+assert.equal(bili.defaultMode, "bilingual", "homepage injection must survive navigation into a video");
+assert.equal(sites.forURL("https://www.youtube.com/").defaultMode, "below");
+assert.equal(sites.forURL("https://bilibili.com.evil.test/"), null);
+const calls = [], node = { querySelectorAll(selector) { calls.push(selector); return selector === bili.text[0] ? [{ textContent: "English CC" }] : []; } };
+assert.equal(sites.segments(node, bili).length, 1); assert.equal(calls.length, 1, "one known subtitle text layer, never scan all player text/danmaku");
+const full = { querySelector: () => ({}) }, root = { contains: (n) => n === full };
+assert.equal(sites.player({ querySelector: () => root, fullscreenElement: full }, bili), full, "inner fullscreen area becomes overlay parent");
+console.log("Bilibili/YT identities, part boundaries, allowlist, initial route, source selectors and inner fullscreen: passed");
