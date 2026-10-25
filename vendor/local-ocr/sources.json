@@ -1,0 +1,30 @@
+[
+  {
+    "Version": "6.0.1",
+    "Tarball": "https://registry.npmjs.org/tesseract.js/-/tesseract.js-6.0.1.tgz",
+    "Name": "tesseract.js",
+    "Folder": "engine",
+    "Integrity": "sha512-/sPvMvrCtgxnNRCjbTYbr7BRu0yfWDsMZQ2a/T5aN/L1t8wUQN6tTWv6p6FwzpoEBA0jrN2UD2SX4QQFRdoDbA=="
+  },
+  {
+    "Version": "6.1.2",
+    "Tarball": "https://registry.npmjs.org/tesseract.js-core/-/tesseract.js-core-6.1.2.tgz",
+    "Name": "tesseract.js-core",
+    "Folder": "core",
+    "Integrity": "sha512-pv4GjmramjdObhDyR1q85Td8X60Puu/lGQn7Kw2id05LLgHhAcWgnz6xSdMCSxBMWjQDmMyDXPTC2aqADdpiow=="
+  },
+  {
+    "Version": "1.0.0",
+    "Tarball": "https://registry.npmjs.org/@tesseract.js-data/eng/-/eng-1.0.0.tgz",
+    "Name": "@tesseract.js-data/eng",
+    "Folder": "eng",
+    "Integrity": "sha512-mbTumm6KQPUHyzTPQaF3ObXYnx0SqqfV2nabqFVQBwD6Kl7PhGSLSzOlfFTWy0P3BjghaSKA2W9GB19Jk+ZcTg=="
+  },
+  {
+    "Version": "1.0.0",
+    "Tarball": "https://registry.npmjs.org/@tesseract.js-data/chi_sim/-/chi_sim-1.0.0.tgz",
+    "Name": "@tesseract.js-data/chi_sim",
+    "Folder": "chi_sim",
+    "Integrity": "sha512-iuErURkPbECDUazgsLn/r3c+tU2y5o5S/w14d0A/YiagfsjYyZKgTo75RUpsGJ311qtu0dIX4hqnXAAjmqf2CA=="
+  }
+]
